@@ -6,17 +6,13 @@ pipeline {
         stage('Build') {
             parallel {
                 stage('prod') {
-                    when {
-                        expression { env.BRANCH_NAME == 'master' }
-                    }
+                    when { branch 'master' }
                     steps {
                         echo 'Building Prod..'
                     }
                 }
                 stage('dev') {
-                    when {
-                        expression { env.BRANCH_NAME == 'develop' }
-                    }
+                    when { branch 'develop' }
                     steps {
                         echo 'Building Dev..'
                     }
@@ -26,17 +22,13 @@ pipeline {
         stage('Test') {
             parallel {
                 stage('prod') {
-                    when {
-                        expression { env.BRANCH_NAME == 'master' }
-                    }
+                    when { branch 'master' }
                     steps {
                         echo 'Testing Prod..'
                     }
                 }
                 stage('dev') {
-                    when {
-                        expression { env.BRANCH_NAME == 'develop' }
-                    }
+                    when { branch 'develop' }
                     steps {
                         echo 'Testing Dev..'
                     }
@@ -46,17 +38,13 @@ pipeline {
         stage('Deploy') {
             parallel {
                 stage('prod') {
-                    when {
-                        expression { env.BRANCH_NAME == 'master' }
-                    }
+                    when { branch 'master' }
                     steps {
                         echo 'Deploying Prod..'
                     }
                 }
                 stage('dev') {
-                    when {
-                        expression { env.BRANCH_NAME == 'develop' }
-                    }
+                    when { branch 'develop' }
                     steps {
                         echo 'Deploying Dev..'
                     }
