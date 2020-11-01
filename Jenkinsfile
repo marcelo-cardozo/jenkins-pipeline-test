@@ -3,12 +3,11 @@ pipeline {
     agent any
 
     stages {
-        GIT_BRANCH = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
         stage('Build') {
             parallel {
                 stage('prod') {
                     when {
-                        expression { GIT_BRANCH == 'master' }
+                        expression { env.BRANCH_NAME == 'master' }
                     }
                     steps {
                         echo 'Building Prod..'
@@ -16,7 +15,7 @@ pipeline {
                 }
                 stage('dev') {
                     when {
-                        expression { GIT_BRANCH == 'develop' }
+                        expression { env.BRANCH_NAME == 'develop' }
                     }
                     steps {
                         echo 'Building Dev..'
@@ -28,7 +27,7 @@ pipeline {
             parallel {
                 stage('prod') {
                     when {
-                        expression { GIT_BRANCH == 'master' }
+                        expression { env.BRANCH_NAME == 'master' }
                     }
                     steps {
                         echo 'Testing Prod..'
@@ -36,7 +35,7 @@ pipeline {
                 }
                 stage('dev') {
                     when {
-                        expression { GIT_BRANCH == 'develop' }
+                        expression { env.BRANCH_NAME == 'develop' }
                     }
                     steps {
                         echo 'Testing Dev..'
@@ -48,7 +47,7 @@ pipeline {
             parallel {
                 stage('prod') {
                     when {
-                        expression { GIT_BRANCH == 'master' }
+                        expression { env.BRANCH_NAME == 'master' }
                     }
                     steps {
                         echo 'Deploying Prod..'
@@ -56,7 +55,7 @@ pipeline {
                 }
                 stage('dev') {
                     when {
-                        expression { GIT_BRANCH == 'develop' }
+                        expression { env.BRANCH_NAME == 'develop' }
                     }
                     steps {
                         echo 'Deploying Dev..'
