@@ -3,19 +3,71 @@ pipeline {
     agent any
 
     stages {
+        GIT_BRANCH = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
         stage('Build') {
-            steps {
-                echo 'Building..'
+            stage('prod'){
+                when {
+                    expression {
+                        GIT_BRANCH == 'master'
+                    }
+                }
+                steps {
+                    echo 'Building Prod..'
+                }
+            }
+            stage('dev'){
+                when {
+                    expression {
+                        GIT_BRANCH == 'develop'
+                    }
+                }
+                steps {
+                    echo 'Building Dev..'
+                }
             }
         }
         stage('Test') {
-            steps {
-                echo 'Testing..'
+            stage('prod'){
+                when {
+                    expression {
+                        GIT_BRANCH == 'master'
+                    }
+                }
+                steps {
+                    echo 'Testing Prod..'
+                }
+            }
+            stage('dev'){
+                when {
+                    expression {
+                        GIT_BRANCH == 'develop'
+                    }
+                }
+                steps {
+                    echo 'Testing Dev..'
+                }
             }
         }
         stage('Deploy') {
-            steps {
-                echo 'Deploying....'
+            stage('prod'){
+                when {
+                    expression {
+                        GIT_BRANCH == 'master'
+                    }
+                }
+                steps {
+                    echo 'Deploying Prod..'
+                }
+            }
+            stage('dev'){
+                when {
+                    expression {
+                        GIT_BRANCH == 'develop'
+                    }
+                }
+                steps {
+                    echo 'Deploying Dev..'
+                }
             }
         }
     }
