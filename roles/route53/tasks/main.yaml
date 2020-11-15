@@ -1,6 +1,6 @@
 - name: change route53
-  route53:
-    state: create
+  community.aws.route53:
+    state: present
     zone: cardozo.dev
     record: www.cardozo.dev
     failover: PRIMARY
