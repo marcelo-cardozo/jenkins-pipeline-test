@@ -3,7 +3,7 @@
     state: present
     zone: cardozo.dev
     record: www.cardozo.dev
-    failover: PRIMARY
+    failover: SECONDARY
     type: CNAME
     ttl: 30
     identifier: server1
