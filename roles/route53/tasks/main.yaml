@@ -1,6 +1,6 @@
 - name: change route53
   route53:
-    state: present
+    state: create
     zone: cardozo.dev
     record: www.cardozo.dev
     failover: PRIMARY
